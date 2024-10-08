@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    networks:
+      - logging_network
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  express-api:
+    build: ./express-api
+    container_name: express-api
+    networks:
+      - logging_network
+    depends_on:
+      - mongo
+    ports:
+      - "3000:3000"
+    environment:
+      MONGO_URI: mongodb://mongodb:27017/loggingDB
+
+networks:
+  logging_network:
+    name: logging_network
+    driver: bridge
+
+volumes:
+  mongo_data:
