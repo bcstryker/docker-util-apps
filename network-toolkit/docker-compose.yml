@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  network-toolkit:
+    build: .
+    container_name: network-toolkit
+    stdin_open: true  # Keep stdin open for interactive sessions
+    tty: true         # Allocate a pseudo-TTY for terminal access
+    networks:
+      - net-tools-network
+
+networks:
+  net-tools-network:
+    driver: bridge
